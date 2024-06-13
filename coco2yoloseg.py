@@ -48,11 +48,11 @@ def convert_coco_to_yolo_segmentation(json_file, folder_name = "labels"):
         yolo_segmentation = ' '.join(yolo_segmentation)
 
         # Generate the YOLO segmentation annotation line
-        yolo_annotation = f"{category_id} {yolo_segmentation}"
+        yolo_annotation = f"{category_id-1} {yolo_segmentation}"
 
         # Save the YOLO segmentation annotation in a file
         output_filename = os.path.join(output_folder, f"{image_filename}.txt")
-        with open(output_filename, 'a+') as file:
+        with open(output_filename, 'w') as file:
             file.write(yolo_annotation + '\n')
 
     print("Conversion completed. YOLO segmentation annotations saved in 'labels' folder.")
@@ -61,7 +61,11 @@ def convert_coco_to_yolo_segmentation(json_file, folder_name = "labels"):
 
 
 # Example usage
-json_file = "path/to/coco_annotations.json" #JSON file
-split = "path/to/output_folder" #Folder
-convert_coco_to_yolo_segmentation(json_file, split)
+train_json_file = "./train/_annotations.coco.json" #JSON file
+train_out = "./" #Folder
+convert_coco_to_yolo_segmentation(train_json_file, train_out)
+
+val_json_file = "./valid/_annotations.coco.json" #JSON file
+val_out = "./" #Folder
+convert_coco_to_yolo_segmentation(val_json_file, val_out)
 
